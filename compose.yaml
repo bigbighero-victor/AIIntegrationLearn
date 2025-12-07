@@ -1,0 +1,7 @@
+﻿services:
+  victorlearnai.web:
+    image: victorlearnai.web
+    build:
+      context: .
+      dockerfile: VictorLearnAI.Web/Dockerfile
+
