@@ -263,3 +263,8 @@ src/FakeTakeOut.Account.Blazor.Server.Tiered/Logs/*
 
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
+
+# Ignore ReSharper files
+*.sln.DotSettings.user
+*.csproj.DotSettings
+resharper/

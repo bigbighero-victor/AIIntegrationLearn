@@ -2,10 +2,19 @@ using Victor.Framework.Infrastructure.Configurations;
 
 namespace VictorLearnAI.Web.Extensions;
 
-// 小 shim：放在主项目中，负责把宿主的 environment + content root 信息传给类库核心方法
+/// <summary>
+/// 小 shim：放在主项目中，负责把宿主的 environment + content root 信息传给类库核心方法
+/// </summary>
 public static class HostConfigurationExtensions
 {
-    // 最小化使用：主项目在 Program.cs 只需一行 builder.UseAppConfiguration<AppSettings>();
+    /// <summary>
+    /// 最小化使用：主项目在 Program.cs 只需一行 builder.UseAppConfiguration<AppSettings/>();
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="useFlexibleNameMatching"></param>
+    /// <param name="baseResourceFileName"></param>
+    /// <typeparam name="TSettings"></typeparam>
+    /// <returns></returns>
     public static WebApplicationBuilder UseAppConfiguration<TSettings>(this WebApplicationBuilder builder,
         bool useFlexibleNameMatching = true, string baseResourceFileName = "appsettings.base.json")
         where TSettings : AppConfigurationSettings, new()

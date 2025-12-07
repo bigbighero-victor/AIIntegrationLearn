@@ -54,7 +54,7 @@ namespace Victor.Framework.Infrastructure.Configurations
         }
 
         // ------------- 属性特性绑定（支持 ConfigurationKeyNameAttribute 与 JsonPropertyNameAttribute） --------------
-        public static T BindUsingAttributes<T>(this IConfiguration config) where T : new()
+        private static T BindUsingAttributes<T>(this IConfiguration config) where T : new()
         {
             var result = new T();
             BindObject(config, result);
@@ -75,7 +75,7 @@ namespace Victor.Framework.Infrastructure.Configurations
 
                 // 生成候选 key 列表
                 var candidates = explicitKey != null
-                    ? new[] { explicitKey, prop.Name }
+                    ? [explicitKey, prop.Name]
                     : GenerateNameCandidates(prop.Name);
 
                 IConfigurationSection foundSection = null;
@@ -98,10 +98,7 @@ namespace Victor.Framework.Infrastructure.Configurations
                 }
 
                 // 若仍为空，则尝试直接用属性名对应子节（允许主配置使用 PascalCase）
-                if (foundSection == null)
-                {
-                    foundSection = config.GetSection(prop.Name);
-                }
+                foundSection ??= config.GetSection(prop.Name);
 
                 if (IsSimpleType(prop.PropertyType))
                 {
@@ -145,7 +142,6 @@ namespace Victor.Framework.Infrastructure.Configurations
             foreach (var part in parts)
             {
                 cur = cur.GetSection(part);
-                if (cur == null) return null;
             }
 
             return cur as IConfigurationSection;
