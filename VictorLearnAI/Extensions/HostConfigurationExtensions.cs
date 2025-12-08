@@ -1,3 +1,4 @@
+using Victor.Framework.Infrastructure;
 using Victor.Framework.Infrastructure.Configurations;
 
 namespace VictorLearnAI.Web.Extensions;

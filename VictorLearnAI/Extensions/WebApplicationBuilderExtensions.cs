@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using Victor.Commons;
+using Victor.Framework.Infrastructure.EFCore;
+
 namespace VictorLearnAI.Web.Extensions;
 
 /// <summary>
@@ -13,12 +17,10 @@ public static class WebApplicationBuilderExtensions
     /// </summary>
     public static WebApplicationBuilder ConfigureWebApplicationBuilder(this WebApplicationBuilder builder)
     {
-        // 注册 services（在 ServiceCollectionExtensions 中）
-        builder.Services.ServiceCollectionExtensions(builder.Configuration, builder.Environment);
-
         // 绑定应用配置（保留原有行为）
         builder.UseAppConfiguration<AppSettings>();
-
+        // 注册 services（在 ServiceCollectionExtensions 中）
+        builder.Services.ServiceCollectionExtensions(builder.Configuration, builder.Environment);
         return builder;
     }
 
@@ -42,7 +44,13 @@ public static class WebApplicationBuilderExtensions
         // services.AddDbContext<MyDbContext>(...);
         // services.AddScoped<IMyService, MyService>();
         // services.AddAuthentication(...);
-
+        var assemblies = ReflectionHelper.GetAllReferencedAssemblies();
+        services.AddAllDbContexts(ctx =>
+        {
+            var appSettings = services.BuildServiceProvider().GetService<AppSettings>();
+            var connStr = configuration.GetValue<string>(appSettings.DatabaseSettings.ConnectionString);
+            ctx.UseNpgsql(connStr);
+        }, assemblies);
         return services;
     }
 }

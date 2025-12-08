@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VictorLearnAI.DatabaseManag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victor.Framework", "Victor.Framework\Victor.Framework.csproj", "{FF87B6D9-4674-4F01-B20F-3AB76BBCA890}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Commons", "Commons", "{2FEE9559-DCD2-479A-92DE-3950AF4D9E19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Victor.Commons", "Victor.Commons\Victor.Commons.csproj", "{CB2323F6-1E7F-4B81-8E17-63FAE00E6251}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +57,13 @@ Global
 		{FF87B6D9-4674-4F01-B20F-3AB76BBCA890}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF87B6D9-4674-4F01-B20F-3AB76BBCA890}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF87B6D9-4674-4F01-B20F-3AB76BBCA890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB2323F6-1E7F-4B81-8E17-63FAE00E6251}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB2323F6-1E7F-4B81-8E17-63FAE00E6251}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB2323F6-1E7F-4B81-8E17-63FAE00E6251}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB2323F6-1E7F-4B81-8E17-63FAE00E6251}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF87B6D9-4674-4F01-B20F-3AB76BBCA890} = {2FEE9559-DCD2-479A-92DE-3950AF4D9E19}
+		{CB2323F6-1E7F-4B81-8E17-63FAE00E6251} = {2FEE9559-DCD2-479A-92DE-3950AF4D9E19}
 	EndGlobalSection
 EndGlobal
