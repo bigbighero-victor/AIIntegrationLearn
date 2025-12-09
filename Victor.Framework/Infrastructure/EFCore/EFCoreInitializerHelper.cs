@@ -13,7 +13,7 @@ public static class EFCoreInitializerHelper
     /// <param name="builder"></param>
     /// <param name="assemblies"></param>
     public static IServiceCollection AddAllDbContexts(this IServiceCollection services,
-        Action<DbContextOptionsBuilder> builder,
+        Action<IServiceProvider, DbContextOptionsBuilder> builder,
         IEnumerable<Assembly> assemblies)
     {
         //AddDbContextPool不支持DbContext注入其他对象，而且使用不当有内存暴涨的问题，因此不用AddDbContextPool

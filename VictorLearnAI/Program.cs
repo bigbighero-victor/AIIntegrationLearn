@@ -2,7 +2,15 @@ using VictorLearnAI.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.ConfigureWebApplicationBuilder();
+builder.ConfigureWebApplicationBuilder()
+    .AddServiceGroup(sc =>
+    {
+        //sc.AddScoped()
+    })
+    .ConfigureMapper(mapper =>
+    {
+        //mapper.AddMaps<aa, bb>();
+    });
 
 var app = builder.Build();
 
