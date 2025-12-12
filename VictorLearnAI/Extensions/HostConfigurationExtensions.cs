@@ -1,3 +1,4 @@
+using Victor.Commons;
 using Victor.Framework.Infrastructure;
 using Victor.Framework.Infrastructure.Configurations;
 
@@ -30,8 +31,9 @@ public static class HostConfigurationExtensions
 
         // 3) 允许主项目再加载其它自定义文件（可由主项目在 Program.cs 之前添加）
         // 4) 最后把合并后的 IConfiguration 绑定到 TSettings 并注册到 DI
-        builder.Services.AddAppConfiguration<TSettings>(builder.Configuration, useFlexibleNameMatching);
-
+        //builder.Services.AddAppConfiguration<TSettings>(builder.Configuration, useFlexibleNameMatching);
+        var assemblies = ReflectionHelper.GetAllReferencedAssemblies();
+        builder.Services.AddAllAppConfigurations(assemblies, builder.Configuration, useFlexibleNameMatching);
         return builder;
     }
 }

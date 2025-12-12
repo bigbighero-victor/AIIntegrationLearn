@@ -10,7 +10,8 @@ namespace Victor.Framework.Infrastructure.Configurations
     public static class AppConfigurationExtensions
     {
         // 将类库内嵌的 base.json 加入 IConfigurationBuilder
-        public static IConfigurationBuilder AddEmbeddedBaseJson(this IConfigurationBuilder builder, string resourceFileName = "base.json")
+        public static IConfigurationBuilder AddEmbeddedBaseJson(this IConfigurationBuilder builder,
+            string resourceFileName = "base.json")
         {
             var assembly = typeof(AppConfigurationSettings).Assembly;
             var resourceName = assembly.GetManifestResourceNames()
@@ -30,7 +31,8 @@ namespace Victor.Framework.Infrastructure.Configurations
 
         // 把合并后的 IConfiguration 绑定到 TSettings（派生自 AppConfigurationSettings）并注册到 DI
         // useAttributeBinder: true 时会读取 ConfigurationKeyName / JsonPropertyName 特性以进行映射（推荐 true）
-        public static IServiceCollection AddAppConfiguration<TSettings>(this IServiceCollection services, IConfiguration configuration, bool useAttributeBinder = true)
+        public static IServiceCollection AddAppConfiguration<TSettings>(this IServiceCollection services,
+            IConfiguration configuration, bool useAttributeBinder = true)
             where TSettings : AppConfigurationSettings, new()
         {
             // 保留 IOptions<T> 支持
@@ -49,6 +51,27 @@ namespace Victor.Framework.Infrastructure.Configurations
 
             services.AddSingleton(settings);
             services.AddSingleton<AppConfigurationSettings>(settings);
+
+            return services;
+        }
+
+        public static IServiceCollection AddAllAppConfigurations(this IServiceCollection services,
+            IEnumerable<Assembly> assemblies,
+            IConfiguration configuration, bool useAttributeBinder = true)
+        {
+            var addMethod = typeof(AppConfigurationExtensions).GetMethod(
+                nameof(AddAppConfiguration), BindingFlags.Public | BindingFlags.Static);
+            
+            foreach (var asmToLoad in assemblies)
+            {
+                Type[] typesInAsm = asmToLoad.GetTypes();
+                foreach (var settingsType in typesInAsm
+                             .Where(t => !t.IsAbstract && typeof(AppConfigurationSettings).IsAssignableFrom(t)))
+                {
+                    var generic = addMethod.MakeGenericMethod(settingsType);
+                    generic.Invoke(null, [services, configuration, useAttributeBinder]);
+                }
+            }
 
             return services;
         }
@@ -151,11 +174,11 @@ namespace Victor.Framework.Infrastructure.Configurations
         {
             return new[]
             {
-                propName,                        // PascalCase
+                propName, // PascalCase
                 char.ToLowerInvariant(propName[0]) + propName.Substring(1), // camelCase
-                ToSnakeCase(propName),           // snake_case
-                ToKebabCase(propName),           // kebab-case
-                ToDotNotation(propName)          // dot.notation
+                ToSnakeCase(propName), // snake_case
+                ToKebabCase(propName), // kebab-case
+                ToDotNotation(propName) // dot.notation
             }.Distinct(StringComparer.OrdinalIgnoreCase).ToArray();
         }
 
@@ -176,6 +199,7 @@ namespace Victor.Framework.Infrastructure.Configurations
                     sb.Append(c);
                 }
             }
+
             return sb.ToString();
         }
 
@@ -186,12 +210,12 @@ namespace Victor.Framework.Infrastructure.Configurations
         {
             var type = Nullable.GetUnderlyingType(t) ?? t;
             return type.IsPrimitive
-                || type.IsEnum
-                || type == typeof(string)
-                || type == typeof(decimal)
-                || type == typeof(DateTime)
-                || type == typeof(Guid)
-                || type == typeof(TimeSpan);
+                   || type.IsEnum
+                   || type == typeof(string)
+                   || type == typeof(decimal)
+                   || type == typeof(DateTime)
+                   || type == typeof(Guid)
+                   || type == typeof(TimeSpan);
         }
     }
 }

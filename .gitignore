@@ -251,16 +251,6 @@ paket-files/
 .idea/
 *.sln.iml
 
-# Account
-src/FakeTakeOut.Account.Web/Logs/*
-src/FakeTakeOut.Account.Web.Host/Logs/*
-src/FakeTakeOut.Account.AuthServer/Logs/*
-src/FakeTakeOut.Account.HttpApi.Host/Logs/*
-src/FakeTakeOut.Account.HttpApi.HostWithIds/Logs/*
-src/FakeTakeOut.Account.DbMigrator/Logs/*
-src/FakeTakeOut.Account.Blazor.Server/Logs/*
-src/FakeTakeOut.Account.Blazor.Server.Tiered/Logs/*
-
 # Use abp install-libs to restore.
 **/wwwroot/libs/*
 
