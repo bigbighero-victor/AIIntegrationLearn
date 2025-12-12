@@ -30,6 +30,12 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Victor.Framework\Victor.Framework.csproj" />
+        <ProjectReference Include="..\VictorLearnAI.AISupporters\VictorLearnAI.AISupporters.csproj" />
+        <ProjectReference Include="..\VictorLearnAI.Services\VictorLearnAI.Services.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Services\" />
     </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 namespace VictorLearnAI.AISupporters.Qianwen;
 
-public class QwenClientHandler
+public class QwenClientHandler(AISupporterSettings  settings) : IAiSupporterService
 {
     private const string API_KEY_NAME = "DASHSCOPE_QWEN_API_KEY";
     
@@ -14,8 +14,10 @@ public class QwenClientHandler
         return apiKey;
     }
 
-    public QwenClientHandler(AISupporterSettings  settings)
+    public Task<string> ChatWithAi()
     {
-        
+        var apiKey = GetApiKey();
+        var combinedUri = new Uri(new Uri(settings.QwenSetting.BaseUri), settings.QwenSetting.ChatUrl);
+        return Task.FromResult(combinedUri.ToString());
     }
 }

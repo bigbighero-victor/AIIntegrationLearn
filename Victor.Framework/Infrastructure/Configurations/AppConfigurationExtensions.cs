@@ -51,7 +51,6 @@ namespace Victor.Framework.Infrastructure.Configurations
 
             services.AddSingleton(settings);
             services.AddSingleton<AppConfigurationSettings>(settings);
-
             return services;
         }
 
